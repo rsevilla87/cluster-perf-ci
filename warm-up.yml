@@ -1,0 +1,21 @@
+---
+global:
+  writeToFile: false
+jobs:
+  - name: warm-up
+    jobIterations: 1
+    namespacedIterations: false
+    namespace: warm-up
+    podWait: false
+    waitWhenFinished: true
+    objects:
+
+    # 4 pods per namespace
+    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/postgres-daemonset.yml"
+      replicas: 1
+
+    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/postgres-secret.yml"
+      replicas: 1
+
+    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/app-daemonset.yml"
+      replicas: 1
