@@ -1,0 +1,62 @@
+# etcd
+
+- expr: avg_over_time(histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[2m]))[5m:]) > 0.01
+  description: 5 minutes avg. etcd fsync latency on {{$labels.pod}} higher than 10ms {{$value}}
+  severity: error
+
+- expr: avg_over_time(histogram_quantile(0.99, rate(etcd_network_peer_round_trip_time_seconds_bucket[5m]))[5m:]) > 0.1
+  description: 5 minutes avg. etcd netowrk peer round trip on {{$labels.pod}} higher than 100ms {{$value}}
+  severity: error
+
+- expr: increase(etcd_server_leader_changes_seen_total[2m]) > 0
+  description: etcd leader changes observed
+  severity: error
+
+# API server
+- expr: avg_over_time(histogram_quantile(0.99, sum(apiserver_request_duration_seconds_bucket{apiserver="kube-apiserver",verb=~"POST|PUT|DELETE|PATCH|CREATE"}) by (verb,resource,subresource,le))[5m:]) > 1
+  description: 5 minutes avg. 99th mutating API call latency for {{$labels.verb}}/{{$labels.resource}} greater than 1 second
+  severity: error
+
+- expr: avg_over_time(histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{apiserver="kube-apiserver",verb="GET",scope="resource"}[2m])) by (verb,resource,subresource,le))[5m:]) > 1
+  description: 5 minutes avg. 99th read-only API call latency for {{$labels.verb}}/{{$labels.resource}} in scope {{$labels.scope}} greater than 1 second
+  severity: error
+
+- expr: avg_over_time(histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{apiserver="kube-apiserver",verb="LIST",scope="namespace"}[2m])) by (verb,resource,subresource,le))[5m:]) > 5
+  description: 5 minutes avg. 99th read-only API call latency for {{$labels.verb}}/{{$labels.resource}} in scope {{$labels.scope}} greater than 5 seconds
+  severity: error
+
+- expr: avg_over_time(histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{apiserver="kube-apiserver",verb="LIST",scope="cluster"}[2m])) by (verb,resource,subresource,le))[5m:]) > 30
+  description: 5 minutes avg. 99th read-only API call latency for {{$labels.verb}}/{{$labels.resource}} in scope {{$labels.scope}} greater than 10 seconds
+  severity: error
+
+# DNS
+- expr: avg_over_time(histogram_quantile(0.99,rate(coredns_kubernetes_dns_programming_duration_seconds_bucket[2m]))[5m:]) > 1
+  description: 5 minutes avg. 99th CoreDNS programming latency in {{$labels.pod}}
+  severity: error
+
+# Kubelet
+- expr: absent(up{job="kubelet",metrics_path="/metrics"} == 1)
+  description: Kubelet instance down in {{$labels.node}}
+  severity: error
+
+- expr: absent(up{job="crio"} == 1)
+  description: CRI-O instance down in {{$labels.node}}
+  severity: error
+
+# Control plane pods
+- expr: absent(up{job="kube-controller-manager"} == 1)
+  description: Kube-controller-manager instance down {{$labels.pod}}
+  severity: error
+
+- expr: absent(up{apiserver="kube-apiserver"} == 1)
+  description: Kube-apiserver instance down {{$labels.instance}}
+  severity: error
+
+- expr: rate(kube_pod_container_status_restarts_total{namespace=~"openshift-(sdn|ovn-kubernetes)"}[2m]) > 0
+  description: Restarts on pod {{$labels.pod}} from ns {{$labels.namespace}} detected
+  severity: error
+
+# OVN
+- expr: max(ovnkube_master_leader) == 0
+  description: There is no ovn-kubernetes master leader
+  severity: error
