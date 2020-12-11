@@ -17,10 +17,9 @@ spec:
           httpGet:
             path: /ready
             port: 8080
-          periodSeconds: 20
+          periodSeconds: 5
           failureThreshold: 1
-          timeoutSeconds: 60
-          initialDelaySeconds: 10
+          timeoutSeconds: 5
         ports:
         - containerPort: 8080
           protocol: TCP
