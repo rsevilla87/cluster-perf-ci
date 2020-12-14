@@ -1,6 +1,6 @@
 # etcd
 
-- expr: avg_over_time(histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[2m]))[5m:]) > 0.01
+- expr: avg_over_time(histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[2m]))[5m:]) > 0.015
   description: 5 minutes avg. etcd fsync latency on {{$labels.pod}} higher than 10ms {{$value}}
   severity: error
 

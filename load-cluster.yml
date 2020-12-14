@@ -14,8 +14,8 @@ jobs:
   - name: load-cluster
     # Worker nodes are m5.large by default (2CPUs). We want to deploy 50 pods per core. Each iteration deploys 5
     jobIterations: 60
-    qps: 10
-    burst: 10
+    qps: 5
+    burst: 5
     namespacedIterations: true
     namespace: load-cluster
     podWait: false
