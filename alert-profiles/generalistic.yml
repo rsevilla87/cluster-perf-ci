@@ -37,11 +37,11 @@
 # Kubelet
 - expr: up{job="kubelet",metrics_path="/metrics"} == 0
   description: Kubelet instance {{$labels.node}} down
-  severity: error
+  severity: info
 
 - expr: up{job="crio"} == 0
   description: CRI-O instance {{$labels.node}} down
-  severity: error
+  severity: info
 
 # Control plane pods
 - expr: up{job="kube-controller-manager"} == 0
