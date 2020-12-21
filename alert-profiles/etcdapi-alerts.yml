@@ -29,20 +29,6 @@
   description: 5 minutes avg. 99th read-only API call latency for {{$labels.verb}}/{{$labels.resource}} in scope {{$labels.scope}} greater than 10 seconds
   severity: error
 
-# DNS
-- expr: avg_over_time(histogram_quantile(0.99,rate(coredns_kubernetes_dns_programming_duration_seconds_bucket[2m]))[5m:]) > 1
-  description: 5 minutes avg. 99th CoreDNS programming latency in {{$labels.pod}}
-  severity: error
-
-# Kubelet
-- expr: up{job="kubelet",metrics_path="/metrics"} == 0
-  description: Kubelet instance {{$labels.node}} down
-  severity: info
-
-- expr: up{job="crio"} == 0
-  description: CRI-O instance {{$labels.node}} down
-  severity: info
-
 # Control plane pods
 - expr: up{job="kube-controller-manager"} == 0
   description: kube-controller-manager instance {{$labels.pod}} down
@@ -50,13 +36,4 @@
 
 - expr: up{apiserver="kube-apiserver"} == 0
   description: kube-apiserver instance {{$labels.instance}} down
-  severity: error
-
-- expr: rate(kube_pod_container_status_restarts_total{namespace=~"openshift-(sdn|ovn-kubernetes)"}[2m]) > 0
-  description: Restarts on pod {{$labels.pod}} from ns {{$labels.namespace}} detected
-  severity: error
-
-# OVN
-- expr: max(ovnkube_master_leader) == 0
-  description: There is no ovn-kubernetes master leader
   severity: error

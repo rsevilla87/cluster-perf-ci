@@ -11,28 +11,28 @@ jobs:
   - name: stage-1
     namespace: stage-1
     jobIterations: 1
-    qps: 25
-    burst: 25
+    qps: 20
+    burst: 20
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1500
+      replicas: 2000
       inputVars:
-        data_length: 1024
+        data_length: 512
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
       replicas: 1000
       inputVars:
-        data_length: 2048
+        data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
       replicas: 500
       inputVars:
-        data_length: 4096
+        data_length: 2048
 
   - name: delete-stage-1
-    qps: 50
-    burst: 50
+    qps: 40
+    burst: 40
     jobType: delete
     objects:
       - kind: ConfigMap
@@ -43,28 +43,28 @@ jobs:
   - name: stage-2
     namespace: stage-2
     jobIterations: 1
-    qps: 50
-    burst: 50
+    qps: 40
+    burst: 40
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1500
+      replicas: 2000
       inputVars:
-        data_length: 1024
+        data_length: 512
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
       replicas: 1000
       inputVars:
-        data_length: 2048
+        data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
       replicas: 500
       inputVars:
-        data_length: 4096
+        data_length: 2048
 
   - name: delete-stage-2
-    qps: 100
-    burst: 100
+    qps: 80
+    burst: 80
     jobType: delete
     objects:
       - kind: ConfigMap
@@ -75,28 +75,28 @@ jobs:
   - name: stage-3
     namespace: stage-3
     jobIterations: 1
-    qps: 100
-    burst: 100
+    qps: 60
+    burst: 60
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1500
+      replicas: 2000
+      inputVars:
+        data_length: 512
+
+    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
+      replicas: 2000
       inputVars:
         data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
+      replicas: 500
       inputVars:
         data_length: 2048
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 500
-      inputVars:
-        data_length: 4096
-
   - name: delete-stage-3
-    qps: 200
-    burst: 200
+    qps: 120
+    burst: 120
     jobType: delete
     objects:
       - kind: ConfigMap
