@@ -16,17 +16,17 @@ jobs:
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
+      replicas: 3000
       inputVars:
         data_length: 512
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
+      replicas: 2000
       inputVars:
         data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 500
+      replicas: 1000
       inputVars:
         data_length: 2048
 
@@ -48,17 +48,17 @@ jobs:
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
+      replicas: 3000
       inputVars:
         data_length: 512
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
+      replicas: 2000
       inputVars:
         data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 500
+      replicas: 1000
       inputVars:
         data_length: 2048
 
@@ -80,7 +80,7 @@ jobs:
     namespacedIterations: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
+      replicas: 3000
       inputVars:
         data_length: 512
 
@@ -90,7 +90,7 @@ jobs:
         data_length: 1024
 
     - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 500
+      replicas: 1000
       inputVars:
         data_length: 2048
 
