@@ -12,6 +12,10 @@
   description: etcd leader changes observed
   severity: error
 
+- expr: histogram_quantile(0.99, sum without(grpc_type) (rate(grpc_server_handling_seconds_bucket{grpc_type="unary",job=~".*etcd.*"}[5m]))) > 0.15
+  description: etcd gRPC requests to {{ $labels.grpc_method }} are taking {{ $value }}s on etcd instance {{ $labels.instance }}.
+  severity: error
+
 # API server
 - expr: avg_over_time(histogram_quantile(0.99, sum(apiserver_request_duration_seconds_bucket{apiserver="kube-apiserver",verb=~"POST|PUT|DELETE|PATCH|CREATE"}) by (verb,resource,subresource,le))[2m:]) > 1
   description: 2 minutes avg. 99th mutating API call latency for {{$labels.verb}}/{{$labels.resource}} greater than 1 second
@@ -30,10 +34,6 @@
   severity: error
 
 # Control plane pods
-- expr: up{job="kube-controller-manager"} == 0
-  description: kube-controller-manager instance {{$labels.pod}} down
-  severity: error
-
-- expr: up{apiserver="kube-apiserver"} == 0
-  description: kube-apiserver instance {{$labels.instance}} down
+- expr: rate(kube_pod_container_status_restarts_total{namespace=~"openshift-.*(apiserver|etcd)", container=~"etcd|kube-apiserver|openshift-apiserver"}[2m]) > 0
+  description: Detected restart of container {{$labels.container}} from pod {{$labels.pod}}
   severity: error
