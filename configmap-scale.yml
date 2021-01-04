@@ -1,9 +1,10 @@
 ---
 global:
   writeToFile: false
+  requestTimeout: 15s
   indexerConfig:
     enabled: true
-    esServers: [https://search-cloud-perf-lqrf3jjtaqo7727m7ynd2xyt4y.us-west-2.es.amazonaws.com]
+    esServers: ["https://search-perfscale-dev-chmf5l4sh66lvxbnadi4bznl3a.us-west-2.es.amazonaws.com"]
     defaultIndex: ripsaw-kube-burner
     type: elastic
 
@@ -11,96 +12,60 @@ jobs:
   - name: stage-1
     namespace: stage-1
     jobIterations: 1
-    qps: 20
-    burst: 20
+    qps: 50
+    burst: 50
     namespacedIterations: false
+    podWait: false
+    verifyObjects: false
     objects:
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 3000
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
+      replicas: 9000
       inputVars:
-        data_length: 512
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
-      inputVars:
-        data_length: 1024
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
-      inputVars:
-        data_length: 2048
+        data_length: 2000
 
   - name: delete-stage-1
-    qps: 40
-    burst: 40
+    waitForDeletion: false
     jobType: delete
     objects:
-      - kind: ConfigMap
-        labelSelector: {kube-burner-job: stage-1}
-      - kind: Namespace
-        labelSelector: {kube-burner-job: stage-1}
+    - kind: Namespace
+      labelSelector: {kube-burner-job: stage-1}
 
   - name: stage-2
     namespace: stage-2
     jobIterations: 1
-    qps: 40
-    burst: 40
+    qps: 60
+    burst: 60
     namespacedIterations: false
+    verifyObjects: false
     objects:
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 3000
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
+      replicas: 10800
       inputVars:
-        data_length: 512
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
-      inputVars:
-        data_length: 1024
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
-      inputVars:
-        data_length: 2048
+        data_length: 3000
 
   - name: delete-stage-2
-    qps: 80
-    burst: 80
+    waitForDeletion: false
     jobType: delete
     objects:
-      - kind: ConfigMap
-        labelSelector: {kube-burner-job: stage-2}
-      - kind: Namespace
-        labelSelector: {kube-burner-job: stage-2}
+    - kind: Namespace
+      labelSelector: {kube-burner-job: stage-2}
 
   - name: stage-3
     namespace: stage-3
     jobIterations: 1
-    qps: 60
-    burst: 60
+    qps: 80
+    burst: 80
     namespacedIterations: false
+    verifyObjects: false
     objects:
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 3000
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
+      replicas: 14400
       inputVars:
-        data_length: 512
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 2000
-      inputVars:
-        data_length: 1024
-
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 1000
-      inputVars:
-        data_length: 2048
+        data_length: 4000
 
   - name: delete-stage-3
-    qps: 120
-    burst: 120
+    waitForDeletion: false
     jobType: delete
     objects:
-      - kind: ConfigMap
-        labelSelector: {kube-burner-job: stage-3}
-      - kind: Namespace
-        labelSelector: {kube-burner-job: stage-3}
-
+    - kind: Namespace
+      labelSelector: {kube-burner-job: stage-3}

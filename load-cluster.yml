@@ -23,22 +23,22 @@ jobs:
     objects:
 
     # 5 pods per namespace
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/postgres-secret.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/postgres-secret.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/postgres-deployment.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/postgres-deployment.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/postgres-service.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/postgres-service.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/postgres-networkpolicy.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/postgres-networkpolicy.yml"
       replicas: 0
       
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/app-configmap.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/app-configmap.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/load-cluster/app-deployment.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/load-cluster/app-deployment.yml"
       replicas: 1
       inputVars:
         podReplicas: 4

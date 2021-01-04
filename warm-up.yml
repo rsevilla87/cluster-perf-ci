@@ -11,13 +11,13 @@ jobs:
     objects:
 
     # 4 pods per namespace
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/postgres-daemonset.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/postgres-daemonset.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/postgres-secret.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/postgres-secret.yml"
       replicas: 1
 
-    - objectTemplate: "https://raw.githubusercontent.com/rsevilla87/cluster-perf-ci/master/templates/app-daemonset.yml"
+    - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/app-daemonset.yml"
       replicas: 1
 
   - name: destroy-warmup
