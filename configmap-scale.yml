@@ -33,13 +33,13 @@ jobs:
   - name: stage-2
     namespace: stage-2
     jobIterations: 1
-    qps: 60
-    burst: 60
+    qps: 70
+    burst: 70
     namespacedIterations: false
     verifyObjects: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 10800
+      replicas: 12600
       inputVars:
         data_length: 3000
 
@@ -53,13 +53,13 @@ jobs:
   - name: stage-3
     namespace: stage-3
     jobIterations: 1
-    qps: 80
-    burst: 80
+    qps: 90
+    burst: 90
     namespacedIterations: false
     verifyObjects: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 14400
+      replicas: 16200
       inputVars:
         data_length: 4000
 
