@@ -3,11 +3,7 @@ global:
   writeToFile: false
   requestTimeout: 15s
   indexerConfig:
-    enabled: true
-    esServers: ["https://search-perfscale-dev-chmf5l4sh66lvxbnadi4bznl3a.us-west-2.es.amazonaws.com"]
-    defaultIndex: ripsaw-kube-burner
-    type: elastic
-
+    enabled: false
 jobs:
   - name: stage-1
     namespace: stage-1
@@ -19,9 +15,9 @@ jobs:
     verifyObjects: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 9000
+      replicas: 18000
       inputVars:
-        data_length: 2000
+        data_length: 4096
 
   - name: delete-stage-1
     waitForDeletion: false
@@ -33,15 +29,15 @@ jobs:
   - name: stage-2
     namespace: stage-2
     jobIterations: 1
-    qps: 70
-    burst: 70
+    qps: 75
+    burst: 75
     namespacedIterations: false
     verifyObjects: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 12600
+      replicas: 25800
       inputVars:
-        data_length: 3000
+        data_length: 8192
 
   - name: delete-stage-2
     waitForDeletion: false
@@ -53,15 +49,15 @@ jobs:
   - name: stage-3
     namespace: stage-3
     jobIterations: 1
-    qps: 90
-    burst: 90
+    qps: 100
+    burst: 100
     namespacedIterations: false
     verifyObjects: false
     objects:
     - objectTemplate: "https://raw.githubusercontent.com/cloud-bulldozer/cluster-perf-ci/master/templates/configmap-scale/configmap.yml"
-      replicas: 16200
+      replicas: 32400
       inputVars:
-        data_length: 4000
+        data_length: 16384
 
   - name: delete-stage-3
     waitForDeletion: false
