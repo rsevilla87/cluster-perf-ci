@@ -97,7 +97,7 @@ metrics:
   - query: histogram_quantile(0.99,sum(rate(etcd_request_duration_seconds_bucket[2m])) by (le,operation,apiserver)) > 0
     metricName: P99APIEtcdRequestLatency
 
-  - query: sum(rate(apiserver_flowcontrol_dispatched_requests_total[2m])) by (flowSchema,priorityLevel)
+  - query: sum(rate(apiserver_flowcontrol_dispatched_requests_total[2m])) by (flow_schema,priority_level)
     metricName: flowControlRate
 
 # Golang metrics
